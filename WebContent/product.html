@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Page</title>
+    <link rel="stylesheet" type="text/css" href="css/product.css" />
+    <link rel="stylesheet" type="text/css" href="css/header.css" />
+
+    <script src="js/product.js"></script>
+    <script src="js/validation.js"></script>
+  </head>
+
+  <body onload="fillInfo()">
+    <div class="flex-container sansserif">
+      <div class="website-header">
+        <ul>
+          <li class="header-image">
+            <a href="index.html">
+              <img
+                src="./img/blank_keyboard.png"
+                alt="Hobby Logo"
+                height="160"
+                width="400"
+              />
+            </a>
+          </li>
+          <li class="header-text">
+            <a href="index.html" style="text-decoration: none; color: white;">
+              KEYBOARD<br />STORE
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="productInfo" class="product">
+        <a href="index.html"></a>
+        <h1 id="productName" class="prod-title"></h1>
+
+        <!-- Need to figure out how to make an image carousel -->
+        <div id="image-row" class="image-row">
+          <div id="imgModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img" />
+          </div>
+        </div>
+
+        <!-- Text Beside Image -->
+        <p id="productID">Product ID:</p>
+        <p id="desc" class="prod-details">Descriptions</p>
+        <p id="price" class="price">Price: $</p>
+        <p>Additional Details</p>
+        <ul>
+          <li id="size" class="list-items">Size:</li>
+          <li id="key" class="list-items">Keys:</li>
+        </ul>
+      </div>
+
+      <!-- Order Form -->
+      <form
+        action="confirmation.php"
+        method="post"
+        name="orderForm"
+        class="order-form"
+      >
+        <input type="hidden" id="test" name="test" value="-1" />
+
+        <h2 class="prod-title">Order Form</h2>
+        <div class="row">
+          <div class="column">
+            <h3>Personal and Shipping Information</h3>
+            <label for="firstName">First Name</label><br />
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              pattern="[A-Za-z ]{1,32}"
+              onblur="this.reportValidity()"
+              required
+            /><br /><br />
+
+            <label for="lastName">Last Name:</label><br />
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              pattern="[A-Za-z ]{1,32}"
+              onblur="this.reportValidity()"
+              required
+            /><br /><br />
+
+            <label for="email">Email Address:</label><br />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
+              required
+              onblur="this.reportValidity()"
+            /><br /><br />
+
+            <label for="phone">Phone Number:</label><br />
+            <small>format: xxx-xxx-xxxx</small>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              inputmode="numeric"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              required
+              onblur="this.reportValidity()"
+            /><br /><br />
+
+            <label for="address">Address:</label><br />
+            <input
+              type="text"
+              id="address"
+              name="address"
+              required
+            /><br /><br />
+
+            <label for="city">City:</label><br />
+            <input type="text" id="city" name="city" required /><br /><br />
+
+            <div class="row">
+              <div class="column-2">
+                <label for="state">State:</label><br />
+                <select id="state" name="state" required>
+                  <option disabled selected value></option>
+                  <option value="AL">AL</option>
+                  <option value="AK">AK</option>
+                  <option value="AZ">AZ</option>
+                  <option value="AR">AR</option>
+                  <option value="CA">CA</option>
+                  <option value="CO">CO</option>
+                  <option value="CT">CT</option>
+                  <option value="DE">DE</option>
+                  <option value="DC">DC</option>
+                  <option value="FL">FL</option>
+                  <option value="GA">GA</option>
+                  <option value="HI">HI</option>
+                  <option value="ID">ID</option>
+                  <option value="IL">IL</option>
+                  <option value="IN">IN</option>
+                  <option value="IA">IA</option>
+                  <option value="KS">KS</option>
+                  <option value="KY">KY</option>
+                  <option value="LA">LA</option>
+                  <option value="ME">ME</option>
+                  <option value="MD">MD</option>
+                  <option value="MA">MA</option>
+                  <option value="MI">MI</option>
+                  <option value="MN">MN</option>
+                  <option value="MS">MS</option>
+                  <option value="MO">MO</option>
+                  <option value="MT">MT</option>
+                  <option value="NE">NE</option>
+                  <option value="NV">NV</option>
+                  <option value="NH">NH</option>
+                  <option value="NJ">NJ</option>
+                  <option value="NM">NM</option>
+                  <option value="NY">NY</option>
+                  <option value="NC">NC</option>
+                  <option value="ND">ND</option>
+                  <option value="OH">OH</option>
+                  <option value="OK">OK</option>
+                  <option value="OR">OR</option>
+                  <option value="PA">PA</option>
+                  <option value="RI">RI</option>
+                  <option value="SC">SC</option>
+                  <option value="SD">SD</option>
+                  <option value="TN">TN</option>
+                  <option value="TX">TX</option>
+                  <option value="UT">UT</option>
+                  <option value="VT">VT</option>
+                  <option value="VA">VA</option>
+                  <option value="WA">WA</option>
+                  <option value="WV">WV</option>
+                  <option value="WI">WI</option>
+                  <option value="WY">WY</option> </select
+                ><br /><br />
+              </div>
+
+              <div class="column-3">
+                <label for="zip">Zip Code:</label><br />
+                <small>format: xxxxx or xxxxx-xxxx</small>
+                <input
+                  type="text"
+                  id="zip"
+                  name="zip"
+                  pattern="(\d{5}([\-]\d{4})?)"
+                  onblur="this.reportValidity()"
+                  required
+                  onchange="checkAndSet()"
+                /><br /><br />
+              </div>
+            </div>
+
+            <label for="shipMeth">Shipping Method:</label><br />
+            <select
+              id="shipMeth"
+              name="shipMeth"
+              onchange="newShip()"
+              onblur="newShip()"
+              required
+            >
+              <option disabled selected value> -- select an option -- </option>
+              <option value="1">overnight</option>
+              <option value="2">2-days expedited</option>
+              <option value="6">6-days ground</option>
+            </select>
+            <br /><br />
+
+            <input type="checkbox" onclick="sameAddress()" /> Billing Address
+            Same as Shipping
+          </div>
+
+          <div class="column">
+            <h3>Billing Information</h3>
+            <label for="billingFirstName">First Name on Card</label><br />
+            <input
+              type="text"
+              id="billingFirstName"
+              name="billingFirstName"
+              required
+            /><br /><br />
+
+            <label for="billingLastName">Last Name on Card:</label><br />
+            <input
+              type="text"
+              id="billingLastName"
+              name="billingLastName"
+              required
+            /><br /><br />
+
+            <label for="ccNum">Card Number:</label><br />
+            <input
+              type="tel"
+              id="ccNum"
+              name="ccNum"
+              required
+              inputmode="numeric"
+              pattern="[0-9\s]{13,19}"
+              maxlength="19"
+              placeholder="xxxx xxxx xxxx xxxx"
+              onblur="this.reportValidity()"
+            /><br /><br />
+
+            <div class="row">
+              <div class="column-2">
+                <label for="expMonth">Expiration:</label><br />
+                <select id="expMonth" name="expMonth" required>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option> </select
+                ><br /><br />
+                <select id="expYear" name="expMonth" required>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+                  <option value="2030">2030</option> </select
+                ><br /><br />
+              </div>
+
+              <div class="column-3">
+                <label for="cvv">CVV:</label><br />
+                <small>xxx or xxxx</small>
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  max="999"
+                  pattern="(^[0-9]{3,4}$)"
+                  onblur="this.reportValidity()"
+                  required
+                /><br /><br />
+              </div>
+            </div>
+
+            <label for="billingAddress">Address:</label><br />
+            <input
+              type="text"
+              id="billingAddress"
+              name="billingAddress"
+              required
+            /><br /><br />
+
+            <label for="billingCity">City:</label><br />
+            <input
+              type="text"
+              id="billingCity"
+              name="billingCity"
+              required
+            /><br /><br />
+
+            <div class="row">
+              <div class="column-2">
+                <label for="billingState">State:</label><br />
+                <select id="billingState" name="billingState" required>
+                  <option value="AL">AL</option>
+                  <option value="AK">AK</option>
+                  <option value="AZ">AZ</option>
+                  <option value="AR">AR</option>
+                  <option value="CA">CA</option>
+                  <option value="CO">CO</option>
+                  <option value="CT">CT</option>
+                  <option value="DE">DE</option>
+                  <option value="DC">DC</option>
+                  <option value="FL">FL</option>
+                  <option value="GA">GA</option>
+                  <option value="HI">HI</option>
+                  <option value="ID">ID</option>
+                  <option value="IL">IL</option>
+                  <option value="IN">IN</option>
+                  <option value="IA">IA</option>
+                  <option value="KS">KS</option>
+                  <option value="KY">KY</option>
+                  <option value="LA">LA</option>
+                  <option value="ME">ME</option>
+                  <option value="MD">MD</option>
+                  <option value="MA">MA</option>
+                  <option value="MI">MI</option>
+                  <option value="MN">MN</option>
+                  <option value="MS">MS</option>
+                  <option value="MO">MO</option>
+                  <option value="MT">MT</option>
+                  <option value="NE">NE</option>
+                  <option value="NV">NV</option>
+                  <option value="NH">NH</option>
+                  <option value="NJ">NJ</option>
+                  <option value="NM">NM</option>
+                  <option value="NY">NY</option>
+                  <option value="NC">NC</option>
+                  <option value="ND">ND</option>
+                  <option value="OH">OH</option>
+                  <option value="OK">OK</option>
+                  <option value="OR">OR</option>
+                  <option value="PA">PA</option>
+                  <option value="RI">RI</option>
+                  <option value="SC">SC</option>
+                  <option value="SD">SD</option>
+                  <option value="TN">TN</option>
+                  <option value="TX">TX</option>
+                  <option value="UT">UT</option>
+                  <option value="VT">VT</option>
+                  <option value="VA">VA</option>
+                  <option value="WA">WA</option>
+                  <option value="WV">WV</option>
+                  <option value="WI">WI</option>
+                  <option value="WY">WY</option> </select
+                ><br /><br />
+              </div>
+
+              <div class="column-3">
+                <label for="billingZip">Zip Code:</label><br />
+                <small> xxxxx or xxxxx-xxxx</small>
+                <input
+                  type="text"
+                  id="billingZip"
+                  name="billingZip"
+                  pattern="(\d{5}([\-]\d{4})?)"
+                  onblur="this.reportValidity()"
+                  required
+                /><br /><br />
+              </div>
+            </div>
+          </div>
+
+          <div class="column-4">
+            <div>
+              <h3>Cart</h3>
+              <p class="cart">Product ID: <span id="orderProdID"></span></p>
+              <p class="cart">Price: $<span id="orderPrice"></span></p>
+              <label for="units">Number of Units: </label>
+              <select id="units" name="units" onchange="difUnits()">
+                <option disabled selected value>
+                  -- select an option --
+                </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option> </select
+              ><br /><br />
+              <input type="hidden" name="finalPrice" id="finalPrice" value="">
+              <input type="hidden" name="prodID" id="prodID" value="">
+              <p>Tax Rate: $<span id="taxPrice"></span></p>
+              <p>Shipping: $<span id="shipPrice"></span></p>
+              <br /><br />
+              <p>Total Price: $<span id="orderTotPrice"></span></p>
+              <br />
+              <br />
+
+              <input type="submit" value="Submit Order" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

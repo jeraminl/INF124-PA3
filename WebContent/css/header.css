@@ -1,0 +1,20 @@
+.website-header ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+}
+
+.header-text ul li {
+  color: white;
+  font-size: xx-large;
+  padding: 25px 0px 25px 50px;
+}
+
+.logo img {
+  height: auto;
+  width: auto;
+  max-height: 50px;
+  max-width: 50px;
+  cursor: pointer;
+}
