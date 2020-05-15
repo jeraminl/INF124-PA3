@@ -29,3 +29,13 @@ Other usability note:
 
 1. clicking the logo at the top when in the product page will bring you back to index
 2. clicking on photos in the product page will pop up a modal
+
+
+
+### DataSource
+- `WebContent/META-INF/context.xml` contains a DataSource, with database information stored in it.
+`WEB-INF/web.xml` registers the DataSource to name jdbc/store_db, which could be referred to anywhere in the project.
+
+- a private DataSource reference dataSource is created with `@Resource` annotation. It is a reference to the DataSource `jdbc/store_db` we registered in `web.xml`
+
+- To use DataSource, you can create a new connection to it by `dataSource.getConnection()`, and you can use the connection as previous examples.
