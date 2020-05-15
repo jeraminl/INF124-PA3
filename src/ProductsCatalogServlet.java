@@ -14,8 +14,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.io.IOException;
 
-@WebServlet(name = "productCatalog", urlPatterns = "/api/fullCatalog")
-public class productCatalog extends HttpServlet {
+@WebServlet(name = "ProductCatalogServlet", urlPatterns = "/api/fullCatalog")
+public class ProductsCatalogServlet extends HttpServlet {
     @Resource(name = "jdbc/store_db")
     private DataSource dataSource;
 
@@ -61,6 +61,7 @@ public class productCatalog extends HttpServlet {
 
             response.setStatus(500);
         }
+        out.close();
 
     }
 }

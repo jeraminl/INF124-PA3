@@ -1,3 +1,72 @@
+
+
+function fillInfo() {
+  var params = new URLSearchParams(window.location.search);
+  var productID = params.get("Id");
+  console.log(productID);
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      let data = JSON.parse(this.responseText);
+      console.log(data);
+      var info = document.getElementById("productInfo");
+
+      for (var i = 0; i < data.length; ++i) {
+        let out = "";
+
+        out += "<a href='index.html'></a>";
+        out += "<h1 id='productName' class='prod-title'></h1>";
+        out += "<div id='image-row' class='image-row'>";
+        out += "<div id='imgModal' class='modal'>";
+        out += "<span class='close'>x</span>";
+        out += "<img class='modal-content' id='img' />";
+        out += "</div>";
+        out +=
+          '<div class="image-column"><img src="img/' +
+          productID +
+          '/0.jpg" class="photo" id="img0" onload="modalZoom(this)"></div>';
+        out +=
+          '<div class="image-column"><img src="img/' +
+          productID +
+          '/1.jpg" class="photo" id="img1" onload="modalZoom(this)"></div>';
+        out +=
+          '<div class="image-column"><img src="img/' +
+          productID +
+          '/2.jpg" class="photo" id="img2" onload="modalZoom(this)"></div>';
+
+        out += "</div>";
+
+        out +=
+          '<p> Product ID:<span id="productID">' +
+          data[i]["product_id"] +
+          ' </span></p>';
+        out +=
+          '<p id="desc" class="prod-details">Descriptions: ' +
+          data[i]["product_description"] +
+          '</p>';
+        out +=
+          '<p id="price" class="price"> $' + data[i]["product_price"] + ' </p>';
+        out += '<p>Additional Details</p>';
+        out += '<ul>';
+        out +=
+          '<li id="size" class="list-items">Size: ' + data[i]["product_size"] + '</li>';
+        out +=
+          '<li id="key" class="list-items">Keys Switch:' +
+          data[i]["product_switch"] +
+          '</li>';
+        out += '</ul>';
+
+        info.innerHTML = out;
+      }
+    }
+  };
+  xmlhttp.open("GET", "api/single-product?id=" + productID, true);
+  console.log("sending");
+  xmlhttp.send();
+}
+
+
 function modalZoom(el) {
   var modal = document.getElementById("imgModal");
 
@@ -11,65 +80,4 @@ function modalZoom(el) {
   span.onclick = function() {
     modal.style.display = "none";
   };
-}
-
-function fillInfo() {
-  var params = new URLSearchParams(window.location.search);
-  var productID = params.get("Id");
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("productInfo").innerHTML = this.responseText;
-      document.getElementById("shipPrice").innerHTML = 5;
-      document.getElementById(
-        "orderProdID"
-      ).innerHTML = document.getElementById("productID").innerText;
-      document.getElementById("orderPrice").innerHTML = document.getElementById(
-        "price"
-      ).innerText;
-      document.getElementById("orderTotPrice").innerHTML =
-        "Complete form to get total price";
-    }
-    console.log("info filled");
-  };
-  xmlhttp.open("GET", "./php/fill_product_info.php?Id=" + productID, true);
-  console.log("sending");
-  xmlhttp.send();
-}
-
-function changeTax() {
-  var zip = document.getElementById("zip").value;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("taxPrice").innerText = this.responseText;
-    }
-  };
-  xmlhttp.open("GET", "./php/get_tax_rate.php?zip=" + zip, true);
-  console.log("sending");
-  xmlhttp.send();
-}
-
-function checkState() {
-  var state = document.getElementById("state").value;
-
-  if (state == "") {
-    var zip = document.getElementById("zip").value;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("state").value = this.responseText;
-      }
-    };
-
-    xmlhttp.open("GET", "./php/get_state.php?zip=" + zip, true);
-    console.log("sending");
-    xmlhttp.send();
-  }
-}
-
-function checkAndSet() {
-  checkState();
-  changeTax();
 }
