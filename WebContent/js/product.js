@@ -81,3 +81,23 @@ function modalZoom(el) {
     modal.style.display = "none";
   };
 }
+
+function addToCart(){
+  var params = new URLSearchParams(window.location.search);
+  var productID = params.get("Id");
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log("added item to cart");
+        alert("item added to cart");
+        data = this.responseText;
+
+        console.log(data);
+    }
+  };
+
+  xmlhttp.open("POST", "api/session?id=" + productID, true);
+  console.log("sending");
+  xmlhttp.send();
+}
