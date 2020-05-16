@@ -14,21 +14,6 @@ import java.util.Date;
 @WebServlet(name = "SessionServlet", urlPatterns = "/api/session")
 public class SessionServlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
-        HttpSession session = request.getSession(true);
-        String sessionId = session.getId();
-        long lastAccessTime = session.getLastAccessedTime();
-
-        JsonObject responseJsonObj = new JsonObject();
-        responseJsonObj.addProperty("sessionID", sessionId);
-        responseJsonObj.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
-
-        response.getWriter().write(responseJsonObj.toString());
-
-    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String item = request.getParameter("id");

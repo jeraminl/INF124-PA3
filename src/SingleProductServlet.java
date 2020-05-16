@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 @WebServlet(name = "SingleProductServlet", urlPatterns = "/api/single-product")
 public class SingleProductServlet extends HttpServlet {
@@ -26,7 +28,26 @@ public class SingleProductServlet extends HttpServlet {
         String id = request.getParameter("id");
         PrintWriter out = response.getWriter();
 
+        // adding product id to the last 5 visited items
+        HttpSession session = request.getSession();
+        ArrayList<String> visited = (ArrayList<String>) session.getAttribute("visited");
+        if (visited == null) {
+            visited = new ArrayList<>();
+            visited.add(id);
 
+        } else {
+            synchronized (visited) {
+                if (!visited.contains(id)){
+                    visited.add(id);
+                }
+            }
+        }
+        if(visited.size() > 5){
+            visited.remove(0);
+        }
+        session.setAttribute("visited", visited);
+
+        // loading database for the given product id
         try {
             Connection dbcon = dataSource.getConnection();
 
