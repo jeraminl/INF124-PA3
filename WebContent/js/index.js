@@ -8,7 +8,7 @@ function loadCatalog(){
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       let data = JSON.parse(this.responseText);
-      console.log(data);
+      //console.log(data);
 
       var office = document.getElementById("productListOffice");
       var gaming = document.getElementById("productListGaming");
@@ -90,8 +90,30 @@ function loadVisited(){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      data = this.responseText;
-      console.log("items visited: " + data);
+      var recent = document.getElementById("recentProduct")
+      let data = JSON.parse(this.responseText);
+      console.log(data);
+      for (var i = 0; i < data.length; ++i) {
+        let out = "";
+        out += "<div class='grid-item'> ";
+        out +=
+            '<a href="product.html?Id=' +
+            data[i]["product_id"] +
+            '" name="' +
+            data[i]["product_name"] +
+            ' style="color:black;text-decoration:none;"> ' +
+            data[i]["product_name"] +
+            '<div class="grid-img">' +
+            '<img src="./img/' +
+            data[i]["product_id"] +
+            '/0.jpg" class="photo">' +
+            "</div>" +
+            "<p>" + data[i]["product_price"] + "</p>" +
+            "</a>";
+        out += "</div>";
+
+        recent.innerHTML += out;
+      }
     }
 
   };
