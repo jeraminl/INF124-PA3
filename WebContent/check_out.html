@@ -2,10 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Check Out</title>
+
+    <link rel="stylesheet" type="text/css" href="css/check_out.css" />
+    <link rel="stylesheet" type="text/css" href="css/header.css" />
+
+    <script src="js/validation.js"></script>
 </head>
 <body>
-
+<div class="flex-container sansserif">
+    <div class="website-header">
+        <ul>
+            <li class="header-image">
+                <a href="index.html">
+                    <img
+                            src="./img/blank_keyboard.png"
+                            alt="Hobby Logo"
+                            height="160"
+                            width="400"
+                    />
+                </a>
+            </li>
+            <li class="header-text">
+                <a href="index.html" style="text-decoration: none; color: white;">
+                    KEYBOARD<br />STORE
+                </a>
+            </li>
+        </ul>
+    </div>
 <form
         action="confirmation.php"
         method="post"
@@ -48,7 +72,6 @@
             /><br /><br />
 
             <label for="phone">Phone Number:</label><br />
-            <small>format: xxx-xxx-xxxx</small>
             <input
                     type="tel"
                     id="phone"
@@ -57,7 +80,8 @@
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                     required
                     onblur="this.reportValidity()"
-            /><br /><br />
+            /><br />
+            <small>xxx-xxx-xxxx</small><br /><br />
 
             <label for="address">Address:</label><br />
             <input
@@ -131,7 +155,6 @@
 
                 <div class="column-3">
                     <label for="zip">Zip Code:</label><br />
-                    <small>format: xxxxx or xxxxx-xxxx</small>
                     <input
                             type="text"
                             id="zip"
@@ -140,7 +163,8 @@
                             onblur="this.reportValidity()"
                             required
                             onchange="checkAndSet()"
-                    /><br /><br />
+                    /><br />
+                    <small>xxxxx or xxxxx-xxxx</small><br /><br />
                 </div>
             </div>
 
@@ -228,7 +252,6 @@
 
                 <div class="column-3">
                     <label for="cvv">CVV:</label><br />
-                    <small>xxx or xxxx</small>
                     <input
                             type="text"
                             id="cvv"
@@ -237,7 +260,8 @@
                             pattern="(^[0-9]{3,4}$)"
                             onblur="this.reportValidity()"
                             required
-                    /><br /><br />
+                    /><br />
+                    <small>xxx or xxxx</small><br /><br />
                 </div>
             </div>
 
@@ -317,7 +341,6 @@
 
                 <div class="column-3">
                     <label for="billingZip">Zip Code:</label><br />
-                    <small> xxxxx or xxxxx-xxxx</small>
                     <input
                             type="text"
                             id="billingZip"
@@ -325,7 +348,8 @@
                             pattern="(\d{5}([\-]\d{4})?)"
                             onblur="this.reportValidity()"
                             required
-                    /><br /><br />
+                    /><br />
+                    <small>xxxxx or xxxxx-xxxx</small><br /><br /><br />
                 </div>
             </div>
         </div>
