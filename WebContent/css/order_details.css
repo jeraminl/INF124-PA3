@@ -11,7 +11,6 @@
   border-radius: 25px;
   display: grid;
   padding: 50px 50px 50px 50px;
-  grid-template-columns: auto auto auto;
   grid-gap: 25px 25px;
   background-color: #696969;
 }
@@ -37,7 +36,7 @@
   font-style: italic;
 }
 .details-title {
-  margin-left: 500px;
+
   text-align: center;
   /* border-style: ridge; */
 }

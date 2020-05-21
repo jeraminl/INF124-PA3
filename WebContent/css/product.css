@@ -9,7 +9,8 @@
   flex-direction: column;
   justify-content: center;
   background-color: black;
-  /* border-style: ridge; */
+  color: white;
+  padding: 25px 50px 25px 50px;
 }
 
 .sansserif {
@@ -84,13 +85,11 @@
 }
 
 .product {
-  border-style: ridge;
-  border-radius: 5px;
+  border-radius: 25px;
+  display: grid;
+  padding: 0px 50px 50px 50px;
+  grid-gap: 10px 25px;
   background-color: #696969;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 50px;
-  border-color: #696969;
 }
 
 .image-wheel {
