@@ -1,7 +1,9 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,12 +27,20 @@ public class ProductsCatalogServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        //System.out.println("visited: " + (String)session.getAttribute("visited"));
 
         try {
             Connection dbcon = dataSource.getConnection();
             Statement statement = dbcon.createStatement();
             String query = "SELECT * from products";
             ResultSet rs = statement.executeQuery(query);
+            RequestDispatcher rd = request.getRequestDispatcher("/api/session");
+            rd.include(request,response);
+
+
+            JsonArray total = new JsonArray();
+
             JsonArray jsonArray = new JsonArray();
 
             while (rs.next()){
@@ -49,7 +59,14 @@ public class ProductsCatalogServlet extends HttpServlet {
                 jsonArray.add(jsonObject);
             }
 
-            out.write(jsonArray.toString());
+
+            JsonArray visited = (JsonArray) request.getAttribute("visitedData");
+
+            total.add(jsonArray);
+            total.add(visited);
+
+            out.write(total.toString());
+
             response.setStatus(200);
 
             rs.close();
@@ -67,53 +84,4 @@ public class ProductsCatalogServlet extends HttpServlet {
 
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        ArrayList<String> visited = (ArrayList<String>) session.getAttribute("visited");
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-
-        try {
-            Connection dbcon = dataSource.getConnection();
-            Statement statement = dbcon.createStatement();
-            String query = "SELECT * from products";
-            ResultSet rs = statement.executeQuery(query);
-            JsonArray jsonArray = new JsonArray();
-
-            while (rs.next()){
-                if (visited.contains(rs.getString("id"))){
-                    String product_id = rs.getString("id");
-                    String product_name = rs.getString("name");
-                    float product_price = rs.getFloat("price");
-                    String product_category = rs.getString("category");
-
-                    JsonObject jsonObject = new JsonObject();
-
-                    jsonObject.addProperty("product_id", product_id);
-                    jsonObject.addProperty("product_name", product_name);
-                    jsonObject.addProperty("product_price", product_price);
-                    jsonObject.addProperty("product_category", product_category);
-
-                    jsonArray.add(jsonObject);
-                }
-
-            }
-
-            out.write(jsonArray.toString());
-            response.setStatus(200);
-
-            rs.close();
-            statement.close();
-            dbcon.close();
-
-        } catch (Exception e){
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("errorMessage", e.getMessage());
-            out.write(jsonObject.toString());
-
-            response.setStatus(500);
-        }
-        out.close();
-
-    }
 }

@@ -24,7 +24,7 @@ public class SingleProductServlet extends HttpServlet {
     private DataSource dataSource;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        System.out.println("parameter: " + request.getParameter("id"));
+        //System.out.println("parameter: " + request.getParameter("id"));
         String id = request.getParameter("id");
         PrintWriter out = response.getWriter();
 
