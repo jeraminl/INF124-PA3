@@ -9,14 +9,15 @@ function changeTax() {
             var taxRate = 0;
             for (var i = 0; i < data.length; ++i) {
                 taxRate = parseFloat(data[i]["tax"]).toFixed(2)
-                document.getElementById("taxPrice").value = taxRate;
-                document.getElementById("taxPrice").innerHTML = taxRate;
-                var final = (parseFloat(total) + parseFloat(taxRate)).toFixed(2);
+                var newtaxRate = (parseFloat(document.getElementById("cartPrice").value) * parseFloat(taxRate)).toFixed(2);
+                document.getElementById("taxPrice").value = newtaxRate;
+                document.getElementById("taxPrice").innerHTML = newtaxRate;
+                var final = (parseFloat(total) + parseFloat(newtaxRate)).toFixed(2);
             }
             document.getElementById("taxCart").value = final;
             if (document.getElementById("shipCart").value != ""){
                 var shippingCart = parseFloat(document.getElementById("shipCart").value);
-                final = (parseFloat(shippingCart) + parseFloat(taxRate)).toFixed(2);
+                final = (parseFloat(shippingCart) + parseFloat(newtaxRate)).toFixed(2);
             }
             document.getElementById("orderTotPrice").innerHTML = final;
         }
