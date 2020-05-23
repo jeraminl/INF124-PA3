@@ -13,22 +13,29 @@ function sameAddress() {
 
 function newShip() {
   console.log("shipping changed");
-  var ship = document.getElementById("shipMeth");
-  var shipPrice = ship.value;
+  var shipPrice = document.getElementById("shipMeth").value;
 
+  var ship = 0
   if (shipPrice == 1) {
     document.getElementById("shipPrice").innerHTML = 10;
+    ship = 10;
   } else if (shipPrice == 2) {
     document.getElementById("shipPrice").innerHTML = 5;
+    ship = 5;
   } else {
     document.getElementById("shipPrice").innerHTML = 0;
   }
 
   var price = parseFloat(document.getElementById("cartPrice").value);
 
-  var ship = parseFloat(document.getElementById("shipPrice").innerHTML);
+  var shipCart = (parseFloat(price) + parseFloat(ship)).toFixed(2);
+  document.getElementById("shipCart").value = shipCart;
 
-  var finalPrice = (price + ship).toFixed(2);
+  if (document.getElementById("taxCart").value != "") {
+    price = parseFloat(document.getElementById("taxCart").value);
+  }
+
+  var finalPrice = (parseFloat(price) + parseFloat(ship)).toFixed(2);
 
   document.getElementById("orderTotPrice").innerHTML = finalPrice;
   document.getElementById("finalPrice").value = finalPrice;
@@ -56,3 +63,4 @@ function loadCart() {
   console.log("sending");
   xmlhttp.send();
 }
+
