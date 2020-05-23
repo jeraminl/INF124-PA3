@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/header.css" />
 
     <script src="js/validation.js"> </script>
+    <script src="js/check_out.js"> </script>
 
 </head>
 <body onload="loadCart()">
@@ -360,8 +361,11 @@
                 <h3>Cart</h3>
                 <p class="cart"><span id="orderProdID"></span></p>
                 <input type="hidden" name="cartPrice" id="cartPrice" value="">
+                <input type="hidden" name="taxCart" id="taxCart" value="">
+                <input type="hidden" name="shipCart" id="shipCart" value="">
                 <input type="hidden" name="finalPrice" id="finalPrice" value="">
                 <input type="hidden" name="prodID" id="prodID" value="">
+                <p>Tax Rate: $<span id="taxPrice"></span></p>
                 <p>Shipping: $<span id="shipPrice"></span></p>
                 <br /><br />
                 <p>Total Price: $<span id="orderTotPrice"></span></p>
