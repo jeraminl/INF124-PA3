@@ -112,7 +112,7 @@ function loadCatalog(){
         }
       }
       else{
-        recent.innerHTML("<p> you have not viewed any products recently </p>");
+        recent.innerHTML="<p> you have not viewed any products recently </p>";
       }
 
 

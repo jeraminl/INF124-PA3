@@ -13,59 +13,58 @@ function sameAddress() {
 
 function newShip() {
   console.log("shipping changed");
-  var ship = document.getElementById("shipMeth");
-  var shipPrice = ship.value;
+  var shipPrice = document.getElementById("shipMeth").value;
 
+  var ship = 0
   if (shipPrice == 1) {
     document.getElementById("shipPrice").innerHTML = 10;
+    ship = 10;
   } else if (shipPrice == 2) {
     document.getElementById("shipPrice").innerHTML = 5;
+    ship = 5;
   } else {
     document.getElementById("shipPrice").innerHTML = 0;
   }
 
-  var price = parseFloat(document.getElementById("orderPrice").innerHTML);
-  var oldUnits = document.getElementById("units");
-  var newUnits = parseFloat(oldUnits.value);
-  var ship = parseFloat(document.getElementById("shipPrice").innerHTML);
+  var price = parseFloat(document.getElementById("cartPrice").value);
 
-  var tax = document.getElementById("taxPrice");
-  var newTax = parseFloat(tax.innerHTML);
+  var shipCart = (parseFloat(price) + parseFloat(ship)).toFixed(2);
+  document.getElementById("shipCart").value = shipCart;
 
-  if (newTax == "") {
-    newTax = 0;
+  if (document.getElementById("taxCart").value != "") {
+    price = parseFloat(document.getElementById("taxCart").value);
   }
-  var finalPrice = (
-    price * newUnits +
-    price * newUnits * newTax +
-    ship
-  ).toFixed(2);
 
-  document.getElementById("finalShip").value = ship;
+  var finalPrice = (parseFloat(price) + parseFloat(ship)).toFixed(2);
+
   document.getElementById("orderTotPrice").innerHTML = finalPrice;
   document.getElementById("finalPrice").value = finalPrice;
 }
 
-function difUnits() {
-  var price = parseFloat(document.getElementById("orderPrice").innerHTML);
-  var oldUnits = document.getElementById("units");
-  var newUnits = parseFloat(oldUnits.value);
-  var ship = parseFloat(document.getElementById("shipPrice").innerHTML);
-
-  var tax = document.getElementById("taxPrice");
-  var newTax = parseFloat(tax.innerHTML);
-  console.log(newTax);
-
-  if (newTax == "") {
-    // if tax rate is empty ( i.e. user has not yet input zipcode, tax rate will be 0 )
-    newTax = 0;
+function loadCart() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      let data = JSON.parse(this.responseText);
+      console.log(data);
+      var info = document.getElementById("orderProdID");
+      var cartHTML = document.getElementById("productCart");
+      var total = 0;
+      let out = "";
+      let cart = ""
+      for (var i = 0; i < data.length; ++i) {
+        out += '<p> Product Name:' + data[i]["product_name"] + ' Price: $' + data[i]["product_price"] + ' </p>';
+        total += data[i]["product_price"];
+        cart += data[i]["product_id"] +", ";
+      }
+      info.innerHTML = out;
+      cartHTML.value=cart;
+      document.getElementById("cartPrice").value = total;
+      document.getElementById("orderTotPrice").innerHTML = total;
+    }
   }
-  var finalPrice = (
-    price * newUnits +
-    price * newUnits * newTax +
-    ship
-  ).toFixed(2);
-  document.getElementById("orderTotPrice").innerHTML = finalPrice;
-  document.getElementById("finalPrice").value = finalPrice;
+  xmlhttp.open("POST", "api/display-cart", true);
+  console.log("sending");
+  xmlhttp.send();
 }
 

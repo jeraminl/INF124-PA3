@@ -7,9 +7,12 @@
     <link rel="stylesheet" type="text/css" href="css/check_out.css" />
     <link rel="stylesheet" type="text/css" href="css/header.css" />
 
-    <script src="js/validation.js"></script>
+    <script src="js/validation.js"> </script>
+    <script src="js/check_out.js"> </script>
+
 </head>
-<body>
+<body onload="loadCart()">
+
 <div class="flex-container sansserif">
     <div class="website-header">
         <ul>
@@ -32,7 +35,7 @@
     </div>
     <div><h2 class="form-title">Order Form</h2></div>
 <form
-        action="confirmation.php"
+        action="api/submit-order"
         method="post"
         name="orderForm"
         class="order-form">
@@ -356,23 +359,11 @@
         <div class="column-4">
             <div>
                 <h3>Cart</h3>
-                <p class="cart">Product ID: <span id="orderProdID"></span></p>
-                <p class="cart">Price: $<span id="orderPrice"></span></p>
-                <label for="units">Number of Units: </label>
-                <select id="units" name="units" onchange="difUnits()">
-                    <option disabled selected value>
-                        -- select an option --
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option> </select><br /><br />
+                <p class="cart"><span id="orderProdID"></span></p>
+                <input type="hidden" name="productCart" id="productCart" value="">
+                <input type="hidden" name="cartPrice" id="cartPrice" value="">
+                <input type="hidden" name="taxCart" id="taxCart" value="">
+                <input type="hidden" name="shipCart" id="shipCart" value="">
                 <input type="hidden" name="finalPrice" id="finalPrice" value="">
                 <input type="hidden" name="prodID" id="prodID" value="">
                 <p>Tax Rate: $<span id="taxPrice"></span></p>
