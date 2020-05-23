@@ -24,8 +24,7 @@ CREATE TABLE IF NOT EXISTS orders(
  city varchar(20) NOT NULL,
  state varchar(2) NOT NULL,
  zip varchar(10) NOT NULL,
- productID varchar(6),
+ productID varchar(255),
  ship enum('overnight', '2-days', '6-days'),
- units INT(2) NOT NULL,
  total varchar(10) NOT NULL
 );
