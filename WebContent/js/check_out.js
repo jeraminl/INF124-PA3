@@ -48,6 +48,7 @@ function checkState() {
     }
 }
 
+
 function checkAndSet() {
     checkState();
     changeTax();

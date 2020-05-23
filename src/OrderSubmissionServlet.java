@@ -36,6 +36,7 @@ public class OrderSubmissionServlet extends HttpServlet {
         String zip = request.getParameter("zip");
         String shipMeth = request.getParameter("shipMeth");
         String price = request.getParameter("finalPrice");
+        String productCart = request.getParameter("productCart");
 
 
         try {
@@ -60,7 +61,7 @@ public class OrderSubmissionServlet extends HttpServlet {
             statement.setString(6,city);
             statement.setString(7,state);
             statement.setString(8,zip);
-            statement.setString(9,"products in progress");
+            statement.setString(9,productCart);
             statement.setString(10,shipMeth);
             statement.setString(11,price);
 

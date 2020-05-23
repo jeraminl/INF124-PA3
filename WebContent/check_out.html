@@ -35,7 +35,7 @@
     </div>
     <div><h2 class="form-title">Order Form</h2></div>
 <form
-        action="confirmation.php"
+        action="api/submit-order"
         method="post"
         name="orderForm"
         class="order-form">
@@ -360,6 +360,7 @@
             <div>
                 <h3>Cart</h3>
                 <p class="cart"><span id="orderProdID"></span></p>
+                <input type="hidden" name="productCart" id="productCart" value="">
                 <input type="hidden" name="cartPrice" id="cartPrice" value="">
                 <input type="hidden" name="taxCart" id="taxCart" value="">
                 <input type="hidden" name="shipCart" id="shipCart" value="">

@@ -35,6 +35,9 @@ public class OrderConfirmationServlet extends HttpServlet {
         String billingState = request.getParameter("billingState");
         String billingZip = request.getParameter("billingZip");
 
+        String productCart = request.getParameter("productCart");
+        String price = request.getParameter("finalPrice");
+
 
 
 
@@ -60,6 +63,9 @@ public class OrderConfirmationServlet extends HttpServlet {
         out.write("<p>Billing State:" + billingState + "</p>");
         out.write("<p>Billing Zip:" + billingZip + "</p>");
 
+
+        out.write("<p>product IDs:" + productCart + "</p>");
+        out.write("<p>Final Price:" + price + "</p>");
 
 
         out.write("</div></body></html>");

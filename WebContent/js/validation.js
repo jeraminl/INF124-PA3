@@ -48,13 +48,17 @@ function loadCart() {
       let data = JSON.parse(this.responseText);
       console.log(data);
       var info = document.getElementById("orderProdID");
+      var cartHTML = document.getElementById("productCart");
       var total = 0;
       let out = "";
+      let cart = ""
       for (var i = 0; i < data.length; ++i) {
         out += '<p> Product Name:' + data[i]["product_name"] + ' Price: $' + data[i]["product_price"] + ' </p>';
         total += data[i]["product_price"];
+        cart += data[i]["product_id"] +", ";
       }
       info.innerHTML = out;
+      cartHTML.value=cart;
       document.getElementById("cartPrice").value = total;
       document.getElementById("orderTotPrice").innerHTML = total;
     }
