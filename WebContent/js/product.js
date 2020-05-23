@@ -1,5 +1,3 @@
-
-
 function fillInfo() {
   var params = new URLSearchParams(window.location.search);
   var productID = params.get("Id");
@@ -40,22 +38,24 @@ function fillInfo() {
         out +=
           '<p> Product ID:<span id="productID">' +
           data[i]["product_id"] +
-          ' </span></p>';
+          " </span></p>";
         out +=
           '<p id="desc" class="prod-details">Descriptions: ' +
           data[i]["product_description"] +
-          '</p>';
+          "</p>";
         out +=
-          '<p id="price" class="price"> $' + data[i]["product_price"] + ' </p>';
-        out += '<p>Additional Details</p>';
-        out += '<ul>';
+          '<p id="price" class="price"> $' + data[i]["product_price"] + " </p>";
+        out += "<p>Additional Details</p>";
+        out += "<ul>";
         out +=
-          '<li id="size" class="list-items">Size: ' + data[i]["product_size"] + '</li>';
+          '<li id="size" class="list-items">Size: ' +
+          data[i]["product_size"] +
+          "</li>";
         out +=
           '<li id="key" class="list-items">Keys Switch:' +
           data[i]["product_switch"] +
-          '</li>';
-        out += '</ul>';
+          "</li>";
+        out += "</ul>";
 
         info.innerHTML = out;
       }
@@ -65,7 +65,6 @@ function fillInfo() {
   console.log("sending");
   xmlhttp.send();
 }
-
 
 function modalZoom(el) {
   var modal = document.getElementById("imgModal");
@@ -82,18 +81,18 @@ function modalZoom(el) {
   };
 }
 
-function addToCart(){
+function addToCart() {
   var params = new URLSearchParams(window.location.search);
   var productID = params.get("Id");
 
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        console.log("added item to cart");
-        alert("item added to cart");
-        data = this.responseText;
+      console.log("added item to cart");
+      alert("item added to cart");
+      data = this.responseText;
 
-        console.log(data);
+      console.log(data);
     }
   };
 

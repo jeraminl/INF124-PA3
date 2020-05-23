@@ -15,7 +15,7 @@ function newShip() {
   console.log("shipping changed");
   var shipPrice = document.getElementById("shipMeth").value;
 
-  var ship = 0
+  var ship = 0;
   if (shipPrice == 1) {
     document.getElementById("shipPrice").innerHTML = 10;
     ship = 10;
@@ -51,20 +51,24 @@ function loadCart() {
       var cartHTML = document.getElementById("productCart");
       var total = 0;
       let out = "";
-      let cart = ""
+      let cart = "";
       for (var i = 0; i < data.length; ++i) {
-        out += '<p> Product Name:' + data[i]["product_name"] + ' Price: $' + data[i]["product_price"] + ' </p>';
+        out +=
+          "<p> Product Name:" +
+          data[i]["product_name"] +
+          " Price: $" +
+          data[i]["product_price"] +
+          " </p>";
         total += data[i]["product_price"];
-        cart += data[i]["product_id"] +", ";
+        cart += data[i]["product_id"] + ", ";
       }
       info.innerHTML = out;
-      cartHTML.value=cart;
+      cartHTML.value = cart;
       document.getElementById("cartPrice").value = total;
       document.getElementById("orderTotPrice").innerHTML = total;
     }
-  }
+  };
   xmlhttp.open("POST", "api/display-cart", true);
   console.log("sending");
   xmlhttp.send();
 }
-

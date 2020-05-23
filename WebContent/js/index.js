@@ -3,7 +3,7 @@ function fillInfo() {
   //loadVisited();
 }
 
-function loadCatalog(){
+function loadCatalog() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -26,19 +26,21 @@ function loadCatalog(){
           let out = "";
           out += "<div class='grid-item'> ";
           out +=
-              '<a href="product.html?Id=' +
-              products[i]["product_id"] +
-              '" name="' +
-              products[i]["product_name"] +
-              ' style="color:black;text-decoration:none;"> ' +
-              products[i]["product_name"] +
-              '<div class="grid-img">' +
-              '<img src="./img/' +
-              products[i]["product_id"] +
-              '/0.jpg" class="photo">' +
-              "</div>" +
-              "<p>" + products[i]["product_price"] + "</p>" +
-              "</a>";
+            '<a href="product.html?Id=' +
+            products[i]["product_id"] +
+            '" name="' +
+            products[i]["product_name"] +
+            ' style="color:black;text-decoration:none;"> ' +
+            products[i]["product_name"] +
+            '<div class="grid-img">' +
+            '<img src="./img/' +
+            products[i]["product_id"] +
+            '/0.jpg" class="photo">' +
+            "</div>" +
+            "<p>" +
+            products[i]["product_price"] +
+            "</p>" +
+            "</a>";
           out += "</div>";
 
           office.innerHTML += out;
@@ -46,19 +48,21 @@ function loadCatalog(){
           let out = "";
           out += "<div class='grid-item'> ";
           out +=
-              '<a href="product.html?Id=' +
-              products[i]["product_id"] +
-              '" name="' +
-              products[i]["product_name"] +
-              ' style="color:black;text-decoration:none;"> ' +
-              products[i]["product_name"] +
-              '<div class="grid-img">' +
-              '<img src="./img/' +
-              products[i]["product_id"] +
-              '/0.jpg" class="photo">' +
-              "</div>" +
-              "<p>" + products[i]["product_price"] + "</p>" +
-              "</a>";
+            '<a href="product.html?Id=' +
+            products[i]["product_id"] +
+            '" name="' +
+            products[i]["product_name"] +
+            ' style="color:black;text-decoration:none;"> ' +
+            products[i]["product_name"] +
+            '<div class="grid-img">' +
+            '<img src="./img/' +
+            products[i]["product_id"] +
+            '/0.jpg" class="photo">' +
+            "</div>" +
+            "<p>" +
+            products[i]["product_price"] +
+            "</p>" +
+            "</a>";
           out += "</div>";
 
           gaming.innerHTML += out;
@@ -66,58 +70,56 @@ function loadCatalog(){
           let out = "";
           out += "<div class='grid-item'> ";
           out +=
-              '<a href="product.html?Id=' +
-              products[i]["product_id"] +
-              '" name="' +
-              products[i]["product_name"] +
-              ' style="color:black;text-decoration:none;"> ' +
-              products[i]["product_name"] +
-              '<div class="grid-img">' +
-              '<img src="./img/' +
-              products[i]["product_id"] +
-              '/0.jpg" class="photo">' +
-              "</div>" +
-              "<p>" + products[i]["product_price"] + "</p>" +
-              "</a>";
+            '<a href="product.html?Id=' +
+            products[i]["product_id"] +
+            '" name="' +
+            products[i]["product_name"] +
+            ' style="color:black;text-decoration:none;"> ' +
+            products[i]["product_name"] +
+            '<div class="grid-img">' +
+            '<img src="./img/' +
+            products[i]["product_id"] +
+            '/0.jpg" class="photo">' +
+            "</div>" +
+            "<p>" +
+            products[i]["product_price"] +
+            "</p>" +
+            "</a>";
           out += "</div>";
 
           professional.innerHTML += out;
-
         }
       }
 
-      var recent = document.getElementById("recentProduct")
+      var recent = document.getElementById("recentProduct");
 
-      if (visited != null){
+      if (visited != null) {
         for (var i = 0; i < visited.length; ++i) {
           let out = "";
           out += "<div class='grid-item'> ";
           out +=
-              '<a href="product.html?Id=' +
-              visited[i]["product_id"] +
-              '" name="' +
-              visited[i]["product_name"] +
-              ' style="color:black;text-decoration:none;"> ' +
-              visited[i]["product_name"] +
-              '<div class="grid-img">' +
-              '<img src="./img/' +
-              visited[i]["product_id"] +
-              '/0.jpg" class="photo">' +
-              "</div>" +
-              "<p>" + visited[i]["product_price"] + "</p>" +
-              "</a>";
+            '<a href="product.html?Id=' +
+            visited[i]["product_id"] +
+            '" name="' +
+            visited[i]["product_name"] +
+            ' style="color:black;text-decoration:none;"> ' +
+            visited[i]["product_name"] +
+            '<div class="grid-img">' +
+            '<img src="./img/' +
+            visited[i]["product_id"] +
+            '/0.jpg" class="photo">' +
+            "</div>" +
+            "<p>" +
+            visited[i]["product_price"] +
+            "</p>" +
+            "</a>";
           out += "</div>";
 
           recent.innerHTML += out;
         }
+      } else {
+        recent.innerHTML = "<p> you have not viewed any products recently </p>";
       }
-      else{
-        recent.innerHTML="<p> you have not viewed any products recently </p>";
-      }
-
-
-
-
     }
   };
 
@@ -126,35 +128,36 @@ function loadCatalog(){
   xmlhttp.send();
 }
 
-function loadVisited(){
+function loadVisited() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      var recent = document.getElementById("recentProduct")
+      var recent = document.getElementById("recentProduct");
 
       for (var i = 0; i < data.length; ++i) {
         let out = "";
         out += "<div class='grid-item'> ";
         out +=
-            '<a href="product.html?Id=' +
-            data[i]["product_id"] +
-            '" name="' +
-            data[i]["product_name"] +
-            ' style="color:black;text-decoration:none;"> ' +
-            data[i]["product_name"] +
-            '<div class="grid-img">' +
-            '<img src="./img/' +
-            data[i]["product_id"] +
-            '/0.jpg" class="photo">' +
-            "</div>" +
-            "<p>" + data[i]["product_price"] + "</p>" +
-            "</a>";
+          '<a href="product.html?Id=' +
+          data[i]["product_id"] +
+          '" name="' +
+          data[i]["product_name"] +
+          ' style="color:black;text-decoration:none;"> ' +
+          data[i]["product_name"] +
+          '<div class="grid-img">' +
+          '<img src="./img/' +
+          data[i]["product_id"] +
+          '/0.jpg" class="photo">' +
+          "</div>" +
+          "<p>" +
+          data[i]["product_price"] +
+          "</p>" +
+          "</a>";
         out += "</div>";
 
         recent.innerHTML += out;
       }
     }
-
   };
 
   xmlhttp.open("POST", "api/fullCatalog", true);

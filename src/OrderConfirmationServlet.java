@@ -43,7 +43,7 @@ public class OrderConfirmationServlet extends HttpServlet {
 
 
         PrintWriter out = response.getWriter();
-        out.write("<html><body><div id='serlvetResponse' style='text-align: center;'>");
+        out.write("<html><body><div style='text-align: center;'>");
         out.write("<p style='color: green; font-size: large;'>Congratulations! <span style='text-transform: capitalize;'>" + firstName + "</span>, your order is complete!</p>");
 
         out.write("<p>First Name:" + firstName + "</p>");
