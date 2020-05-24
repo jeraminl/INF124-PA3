@@ -43,32 +43,61 @@ public class OrderConfirmationServlet extends HttpServlet {
 
 
         PrintWriter out = response.getWriter();
-        out.write("<html><body><div style='text-align: center;'>");
-        out.write("<p style='color: green; font-size: large;'>Congratulations! <span style='text-transform: capitalize;'>" + firstName + "</span>, your order is complete!</p>");
 
-        out.write("<p>First Name:" + firstName + "</p>");
-        out.write("<p>Last Name:" + lastName + "</p>");
-        out.write("<p>Email:" + email + "</p>");
-        out.write("<p>Phone:" + phone + "</p>");
-        out.write("<p>Address:" + address + "</p>");
-        out.write("<p>City:" + city + "</p>");
-        out.write("<p>State:" + state + "</p>");
-        out.write("<p>Zip:" + zip + "</p>");
-        out.write("<p>Shipping Method:" + shipMeth + "</p>");
-        out.write("<p>Billing First Name:" + billingFirstName + "</p>");
-        out.write("<p>Billing Last Name:" + billingLastName + "</p>");
-        out.write("<p>CC:" + ccNum + "</p>");
-        out.write("<p>Billing Address:" + billingAddress + "</p>");
-        out.write("<p>Billing City:" + billingCity + "</p>");
-        out.write("<p>Billing State:" + billingState + "</p>");
-        out.write("<p>Billing Zip:" + billingZip + "</p>");
-
-
-        out.write("<p>product IDs:" + productCart + "</p>");
-        out.write("<p>Final Price:" + price + "</p>");
-
-
-        out.write("</div></body></html>");
+        out.write("<html class=\"no-js\" lang=\"\">\n" +
+                "  <head>\n" +
+                "    <meta charset=\"utf-8\" />\n" +
+                "    <title>Order Details</title>\n" +
+                "    <meta name=\"description\" content=\"\" />\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n" +
+                "\n" +
+                "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/order_details.css\" />\n" +
+                "    <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/header.css\" />\n" +
+                "    <meta name=\"theme-color\" content=\"#fafafa\" />\n" +
+                "  </head>\n" +
+                "  <body>\n" +
+                "    <div class=\"flex-container sansserif\">\n" +
+                "      <div class=\"website-header\">\n" +
+                "        <ul>\n" +
+                "          <li class=\"header-image\">\n" +
+                "            <img\n" +
+                "              src=\"../img/blank_keyboard.png\"\n" +
+                "              alt=\"Hobby Logo\"\n" +
+                "              height=\"160\"\n" +
+                "              width=\"400\"\n" +
+                "            />\n" +
+                "          </li>\n" +
+                "          <li class=\"header-text\">KEYBOARD<br />STORE</li>\n" +
+                "        </ul>\n" +
+                "      </div>\n" +
+                "      <div>\n" +
+                "        <h2 class=\"details-title\">Completed Order Details</h2>\n" +
+                "      </div>\n" +
+                "      <div>\n" +
+                "        <div class=\"grid-container\">" +
+                "<p>First Name: " + firstName + "</p>" +
+                "<p>Last Name: " + lastName + "</p>" +
+                "<p>Email: " + email + "</p>" +
+                "<p>Phone: " + phone + "</p>" +
+                "<p>Address: " + address + "</p>" +
+                "<p>City: " + city + "</p>" +
+                "<p>Zip:" + zip + "</p>" +
+                "<p>Shipping Method:" + shipMeth + "</p>" +
+                "<p>Billing First Name:" + billingFirstName + "</p>" +
+                "<p>Billing First Name:" + billingFirstName + "</p>" +
+                "<p>CC:" + ccNum + "</p>" +
+                "<p>Billing Address:" + billingAddress + "</p>" +
+                "<p>Billing City:" + billingCity + "</p>" +
+                "<p>Billing State:" + billingState + "</p>" +
+                "<p>Billing Zip:" + billingZip + "</p>" +
+                "<p>product IDs:" + productCart + "</p>" +
+                "<p>Final Price:" + price + "</p>" +
+                "</div>\n" +
+                "        <a href=\"../index.html\"><button>TO HOME PAGE</button></a>\n" +
+                "      </div>\n" +
+                "    </div>\n" +
+                "  </body>\n" +
+                "</html>");
         out.close();
     }
 
