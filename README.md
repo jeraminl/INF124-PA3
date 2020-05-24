@@ -22,3 +22,10 @@ Other usability note:
 
 1. clicking the logo at the top when in the product page will bring you back to index
 2. clicking on photos in the product page will pop up a modal
+
+Local Deployment requirement:
+
+MySQL 5.7 - edit credentials in META-INF/context.xml
+Tomcat 8.5.53
+Maven
+deployed through intellij tomcat integration
