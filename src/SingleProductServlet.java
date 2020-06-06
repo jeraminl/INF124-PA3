@@ -1,5 +1,8 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.glassfish.jersey.client.ClientConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -9,13 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "SingleProductServlet", urlPatterns = "/api/single-product")
 public class SingleProductServlet extends HttpServlet {
@@ -26,7 +35,7 @@ public class SingleProductServlet extends HttpServlet {
         response.setContentType("application/json");
         //System.out.println("parameter: " + request.getParameter("id"));
         String id = request.getParameter("id");
-        PrintWriter out = response.getWriter();
+
 
         // adding product id to the last 5 visited items
         HttpSession session = request.getSession();
@@ -47,54 +56,27 @@ public class SingleProductServlet extends HttpServlet {
         }
         session.setAttribute("visited", visited);
 
-        // loading database for the given product id
-        try {
-            Connection dbcon = dataSource.getConnection();
+        ClientConfig config = new ClientConfig();
+        Client client = ClientBuilder.newClient(config);
 
-            String query = "SELECT * FROM products WHERE id=?";
-            PreparedStatement statement = dbcon.prepareStatement(query);
+        WebTarget target = client.target(getBaseURI());
 
-            statement.setString(1,id);
-            ResultSet rs = statement.executeQuery();
-            JsonArray jsonArray = new JsonArray();
+        String jsonResponse =
+                target.path(id).
+                        request().
+                        get(String.class);
 
-            while (rs.next()){
-                String product_id = rs.getString("id");
-                String product_description = rs.getString("description");
-                String product_size = rs.getString("size");
-                String product_name = rs.getString("name");
-                float product_price = rs.getFloat("price");
-                String product_switch = rs.getString("switch");
-                String product_category = rs.getString("category");
+        System.out.println(jsonResponse);
+        PrintWriter out = response.getWriter();
 
+        out.write(jsonResponse);
 
-                JsonObject jsonObject = new JsonObject();
-
-                jsonObject.addProperty("product_id", product_id);
-                jsonObject.addProperty("product_name", product_name);
-                jsonObject.addProperty("product_description", product_description);
-                jsonObject.addProperty("product_size", product_size);
-                jsonObject.addProperty("product_price", product_price);
-                jsonObject.addProperty("product_switch", product_switch);
-                jsonObject.addProperty("product_category", product_category);
-
-                jsonArray.add(jsonObject);
-            }
-
-            out.write(jsonArray.toString());
-            response.setStatus(200);
-
-            rs.close();
-            statement.close();
-            dbcon.close();
-
-        } catch (Exception e){
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("errorMessage", e.getMessage());
-            out.write(jsonObject.toString());
-
-            response.setStatus(500);
-        }
         out.close();
+    }
+
+    private static URI getBaseURI() {
+
+        //Change the URL here to make the client point to your service.
+        return UriBuilder.fromUri("http://localhost:8081/keyboardClient_war/api/products/").build();
     }
 }

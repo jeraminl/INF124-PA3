@@ -1,5 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.glassfish.jersey.client.ClientConfig;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -9,8 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,48 +47,48 @@ public class OrderSubmissionServlet extends HttpServlet {
         String price = request.getParameter("finalPrice");
         String productCart = request.getParameter("productCart");
 
+        Order order = new Order();
 
-        try {
-            Connection dbcon = dataSource.getConnection();
+        order.setFirstName(firstName);
+        order.setLastName(lastName);
+        order.setAddress(address);
+        order.setCity(city);
+        order.setState(state);
+        order.setZip(zip);
+        order.setEmail(email);
+        order.setPhone(phone);
+        order.setProductCart(productCart);
+        order.setShipMeth(shipMeth);
+        order.setPrice(price);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(order);
+        System.out.println(jsonString);
+
+        ClientConfig config = new ClientConfig();
+
+        Client client = ClientBuilder.newClient(config);
+
+        WebTarget target = client.target(getBaseURI());
 
 
-            if (dbcon != null) {
-                System.out.println("Connection established!!");
-                System.out.println();
-            }
+        client.target(getBaseURI())
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(order, MediaType.APPLICATION_JSON));
 
-            String query = "INSERT INTO orders (firstName, lastName, email, phone, address, city, state, " +
-                    "zip, productID, ship, total)" +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement statement = dbcon.prepareStatement(query);
+        System.out.println("submitted");
 
-            statement.setString(1,firstName);
-            statement.setString(2,lastName);
-            statement.setString(3,email);
-            statement.setString(4,phone);
-            statement.setString(5,address);
-            statement.setString(6,city);
-            statement.setString(7,state);
-            statement.setString(8,zip);
-            statement.setString(9,productCart);
-            statement.setString(10,shipMeth);
-            statement.setString(11,price);
-
-            statement.execute();
-
-            statement.close();
-            dbcon.close();
-
-        } catch (Exception e){
-            System.err.println("Got an exception!");
-            System.err.println(e.getMessage());
-
-        }
 
         RequestDispatcher rd = request.getRequestDispatcher("/api/confirm-order");
         rd.forward(request,response);
 
 
+    }
+
+    private static URI getBaseURI() {
+
+        //Change the URL here to make the client point to your service.
+        return UriBuilder.fromUri("http://localhost:8081/keyboardClient_war/api/products/").build();
     }
 
 

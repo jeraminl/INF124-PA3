@@ -26,7 +26,7 @@ public class ZipServlet extends HttpServlet {
         response.setContentType("application/json");
         String zip = request.getParameter("zip");
         PrintWriter out = response.getWriter();
-        System.out.println("parameter HASJDKAHSBJKDSAJKH: " + request.getParameter("zip"));
+        //System.out.println("parameter HASJDKAHSBJKDSAJKH: " + request.getParameter("zip"));
 
         // loading database for the given product zipcode
         try {
@@ -41,7 +41,7 @@ public class ZipServlet extends HttpServlet {
 
             while (rs.next()){
                 String state = rs.getString("state");
-                System.out.println(state);
+                //System.out.println(state);
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("state", state);
                 jsonArray.add(jsonObject);
