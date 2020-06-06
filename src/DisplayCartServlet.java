@@ -1,5 +1,9 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.codehaus.jackson.map.util.JSONPObject;
+import org.glassfish.jersey.client.ClientConfig;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -9,8 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,44 +45,32 @@ public class DisplayCartServlet extends HttpServlet {
 
             // loading database for the given product id
 
-            try {
-                Connection dbcon = dataSource.getConnection();
+            ClientConfig config = new ClientConfig();
+            Client client = ClientBuilder.newClient(config);
 
-                String query = "SELECT * FROM products WHERE id=?";
-                PreparedStatement statement = dbcon.prepareStatement(query);
+            WebTarget target = client.target(getBaseURI());
 
-                statement.setString(1, id);
-                ResultSet rs = statement.executeQuery();
+            String jsonResponse =
+                    target.path(id).
+                            request().
+                            get(String.class);
+            JsonParser parser = new JsonParser();
+            JsonObject json = (JsonObject) parser.parse(jsonResponse);
 
-                while (rs.next()) {
-                    String product_id = rs.getString("id");
-                    String product_name = rs.getString("name");
-                    float product_price = rs.getFloat("price");
+            jsonArray.add(json);
 
-                    JsonObject jsonObject = new JsonObject();
 
-                    jsonObject.addProperty("product_id", product_id);
-                    jsonObject.addProperty("product_name", product_name);
-                    jsonObject.addProperty("product_price", product_price);
-                    System.out.println(product_id + " " + product_name);
-                    jsonArray.add(jsonObject);
-                }
-                System.out.println(jsonArray.toString());
 
-                rs.close();
-                statement.close();
-                dbcon.close();
-
-            } catch (Exception e) {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("errorMessage", e.getMessage());
-                out.write(jsonObject.toString());
-
-                response.setStatus(500);
-            }
         }
+        System.out.println("cart: " + jsonArray.toString());
         out.write(jsonArray.toString());
         response.setStatus(200);
         out.close();
+    }
+
+    private static URI getBaseURI() {
+
+        //Change the URL here to make the client point to your service.
+        return UriBuilder.fromUri("http://localhost:8081/keyboardClient_war/api/products/").build();
     }
 }

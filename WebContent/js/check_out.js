@@ -4,7 +4,6 @@ function changeTax() {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       let data = JSON.parse(this.responseText);
-      console.log(data);
       var total = parseFloat(document.getElementById("cartPrice").value);
       var taxRate = 0;
       for (var i = 0; i < data.length; ++i) {
@@ -41,6 +40,7 @@ function checkState() {
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         let data = JSON.parse(this.responseText);
+        console.log("state info");
         console.log(data);
         for (var i = 0; i < data.length; ++i) {
           document.getElementById("state").value = data[i]["state"];

@@ -46,6 +46,7 @@ function loadCart() {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       let data = JSON.parse(this.responseText);
+      console.log("data for cart");
       console.log(data);
       var info = document.getElementById("orderProdID");
       var cartHTML = document.getElementById("productCart");
@@ -53,14 +54,15 @@ function loadCart() {
       let out = "";
       let cart = "";
       for (var i = 0; i < data.length; ++i) {
+        console.log(data[i]);
         out +=
           "<p> Product Name:" +
-          data[i]["product_name"] +
+          data[i]["name"] +
           " Price: $" +
-          data[i]["product_price"] +
+          data[i]["price"] +
           " </p>";
-        total += data[i]["product_price"];
-        cart += data[i]["product_id"] + ", ";
+        total += data[i]["price"];
+        cart += data[i]["id"] + ", ";
       }
       info.innerHTML = out;
       cartHTML.value = cart;
