@@ -41,7 +41,7 @@ public class DisplayCartServlet extends HttpServlet {
         JsonArray jsonArray = new JsonArray();
         for (int i = 0; i < cart.size(); ++i) {
             String id = cart.get(i);
-            System.out.println(id);
+            //System.out.println(id);
 
             // loading database for the given product id
 
@@ -62,7 +62,7 @@ public class DisplayCartServlet extends HttpServlet {
 
 
         }
-        System.out.println("cart: " + jsonArray.toString());
+        //System.out.println("cart: " + jsonArray.toString());
         out.write(jsonArray.toString());
         response.setStatus(200);
         out.close();

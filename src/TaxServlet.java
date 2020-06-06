@@ -26,7 +26,7 @@ public class TaxServlet extends HttpServlet{
         response.setContentType("application/json");
         String zip = request.getParameter("zip");
         PrintWriter out = response.getWriter();
-        System.out.println("parameter: " + request.getParameter("zip"));
+        //System.out.println("parameter: " + request.getParameter("zip"));
         HttpSession session = request.getSession();
 
         // loading database for the given zipcode
@@ -42,7 +42,7 @@ public class TaxServlet extends HttpServlet{
 
             while (rs.next()){
                 String tax = rs.getString("CombinedRate");
-                System.out.println(tax);
+                //System.out.println(tax);
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("tax", tax);
                 jsonArray.add(jsonObject);
