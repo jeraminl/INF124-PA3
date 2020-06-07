@@ -40,6 +40,7 @@ public class SingleProductServlet extends HttpServlet {
         // adding product id to the last 5 visited items
         HttpSession session = request.getSession();
         ArrayList<String> visited = (ArrayList<String>) session.getAttribute("visited");
+
         if (visited == null) {
             visited = new ArrayList<>();
             visited.add(id);
