@@ -24,6 +24,64 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+class Order {
+    String firstName = "";
+    String lastName = "";
+    String address = "";
+    String city = "";
+    String state = "";
+    String zip = "";
+    String email = "";
+    String phone = "";
+    String productCart = "";
+    String shipMeth = "";
+    String price = "";
+
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
+
+    public void setCity(String city){
+        this.city = city;
+    }
+
+    public void setState(String state){
+        this.state = state;
+    }
+
+    public void setZip(String zip){
+        this.zip = zip;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public void setPhone(String phone){
+        this.address = phone;
+    }
+
+    public void setProductCart(String productCart){
+        this.productCart = productCart;
+    }
+
+    public void setShipMeth(String shipMeth){
+        this.shipMeth = shipMeth;
+    }
+
+    public void setPrice(String price){
+        this.price = price;
+    }
+}
+
 @WebServlet(name = "OrderSubmissionServlet", urlPatterns = "/api/submit-order")
 public class OrderSubmissionServlet extends HttpServlet {
 

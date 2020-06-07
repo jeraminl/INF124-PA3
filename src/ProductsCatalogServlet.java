@@ -2,6 +2,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.glassfish.jersey.client.ClientConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import java.net.URI;
+import java.util.List;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +26,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "ProductCatalogServlet", urlPatterns = "/api/fullCatalog")
 public class ProductsCatalogServlet extends HttpServlet {
@@ -26,62 +35,23 @@ public class ProductsCatalogServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
-        //System.out.println("visited: " + (String)session.getAttribute("visited"));
 
-        try {
-            Connection dbcon = dataSource.getConnection();
-            Statement statement = dbcon.createStatement();
-            String query = "SELECT * from products";
-            ResultSet rs = statement.executeQuery(query);
-            RequestDispatcher rd = request.getRequestDispatcher("/api/session");
-            rd.include(request,response);
+        ClientConfig config = new ClientConfig();
+        Client client = ClientBuilder.newClient(config);
 
+        WebTarget target = client.target(getBaseURI());
 
-            JsonArray total = new JsonArray();
+        String jsonResponse =
+                target.request().
+                        accept(MediaType.APPLICATION_JSON).
+                        get(String.class);
 
-            JsonArray jsonArray = new JsonArray();
-
-            while (rs.next()){
-                String product_id = rs.getString("id");
-                String product_name = rs.getString("name");
-                float product_price = rs.getFloat("price");
-                String product_category = rs.getString("category");
-
-                JsonObject jsonObject = new JsonObject();
-
-                jsonObject.addProperty("product_id", product_id);
-                jsonObject.addProperty("product_name", product_name);
-                jsonObject.addProperty("product_price", product_price);
-                jsonObject.addProperty("product_category", product_category);
-
-                jsonArray.add(jsonObject);
-            }
-
-
-            JsonArray visited = (JsonArray) request.getAttribute("visitedData");
-
-            total.add(jsonArray);
-            total.add(visited);
-
-            out.write(total.toString());
-
-            response.setStatus(200);
-
-            rs.close();
-            statement.close();
-            dbcon.close();
-
-        } catch (Exception e){
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("errorMessage", e.getMessage());
-            out.write(jsonObject.toString());
-
-            response.setStatus(500);
+        System.out.println(jsonResponse);
+        return;
         }
-        out.close();
 
+    private static URI getBaseURI() {
+        return UriBuilder.fromUri("http://localhost:8081/keyboardClient_war/api/products").build();
     }
-
 }

@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,6 +65,7 @@ public class SingleProductServlet extends HttpServlet {
         String jsonResponse =
                 target.path(id).
                         request().
+                        accept(MediaType.APPLICATION_JSON).
                         get(String.class);
 
         System.out.println(jsonResponse);

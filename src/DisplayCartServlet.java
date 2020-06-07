@@ -1,7 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import jdk.nashorn.internal.parser.JSONParser;
+
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.glassfish.jersey.client.ClientConfig;
 
