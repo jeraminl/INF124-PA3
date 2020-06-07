@@ -6,24 +6,79 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="java.sql.*" %>
+<%@page import="java.sql.*,
+    com.google.gson.JsonArray,
+    com.google.gson.JsonObject,
+    com.google.gson.JsonParser,
+    org.glassfish.jersey.client.ClientConfig,
+    javax.annotation.Resource,
+    javax.servlet.ServletException,
+    javax.servlet.annotation.WebServlet,
+    javax.servlet.http.HttpServlet,
+    javax.servlet.http.HttpServletRequest,
+    javax.servlet.http.HttpServletResponse,
+    javax.servlet.http.HttpSession,
+    javax.sql.DataSource,
+    javax.ws.rs.client.Client,
+    javax.ws.rs.client.ClientBuilder,
+    javax.ws.rs.client.WebTarget,
+    javax.ws.rs.core.UriBuilder,
+    java.io.IOException,
+    java.io.PrintWriter,
+    java.net.URI,
+    java.util.ArrayList"
+
+%>
+<%@ page import="com.google.gson.JsonElement" %>
 
 <%
-    Class.forName("com.mysql.jdbc.Driver").newInstance();
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/store_db?useSSL=false&allowPublicKeyRetrieval=true",
-            "mytestuser","mypassword");
 
-    Statement selectOffice = connection.createStatement();
-    ResultSet resultOffice = selectOffice.executeQuery("Select * from products where category = 'Office'");
-    ResultSetMetaData metadataOffice = resultOffice.getMetaData();
+    ArrayList<String> visited = (ArrayList<String>) session.getAttribute("visited");
+    System.out.println("visited: " + visited);
 
-    Statement selectGaming = connection.createStatement();
-    ResultSet resultGaming = selectGaming.executeQuery("Select * from products where category = 'Gaming'");
-    ResultSetMetaData metadataGaming = resultGaming.getMetaData();
+    ClientConfig clientConfig = new ClientConfig();
+    Client client = ClientBuilder.newClient(clientConfig);
 
-    Statement selectPro = connection.createStatement();
-    ResultSet resultPro = selectPro.executeQuery("Select * from products where category = 'Professional'");
-    ResultSetMetaData metadataPro = resultPro.getMetaData();
+    WebTarget target = client.target(getBaseURI());
+
+    String jsonResponse =
+            target.request().get(String.class);
+
+
+    JsonParser parser = new JsonParser();
+    JsonArray data = (JsonArray) parser.parse(jsonResponse);
+
+    JsonArray office = new JsonArray();
+    JsonArray gaming = new JsonArray();
+    JsonArray professional = new JsonArray();
+    JsonArray recent = new JsonArray();
+
+    for (JsonElement el : data){
+        JsonObject product = el.getAsJsonObject();
+        //System.out.println((product.get("category").getAsString().equals("Office")));
+        if (product.get("category").getAsString().equals("Office")){
+            office.add(el);
+        }
+        else if (product.get("category").getAsString().equals("Gaming")){
+            gaming.add(el);
+        }
+        else{
+            professional.add(el);
+        }
+        if (visited != null){
+            for ( String id : visited){
+                if (product.get("id").getAsString().equals(id)){
+                    recent.add(el);
+                }
+            }
+        }
+
+    }
+
+
+
+    System.out.println("recent: " + recent);
+
 
 %>
 
@@ -56,43 +111,61 @@
     </div>
     <div>
         <h2>Recently Viewed Items</h2>
-        <div id="recentProduct" class="grid-container"></div>
+        <div id="recentProduct" class="grid-container">
+            <%  for (JsonElement el: recent) { %>
+            <div class='grid-item'>
+                <a href="product.html?Id=<%= el.getAsJsonObject().get("id").getAsString()%>"
+                   name="<%= el.getAsJsonObject().get("id").getAsString()%>"
+                   style="color:black;text-decoration:none;"
+                >
+                    <%= el.getAsJsonObject().get("name").getAsString() %>
+                    <div class="grid-img">
+                        <img src="./img/<%=el.getAsJsonObject().get("id").getAsString()%>/0.jpg" class="photo">
+                    </div>
+                    <p><%=el.getAsJsonObject().get("price").getAsString()%> </p>
+                </a>
+            </div>
+
+            <% } %>
+        </div>
     </div>
     <div>
         <h2>Our Products</h2>
         <h3>Office</h3>
         <div id="productListOffice" class="grid-container">
 
-            <%  while (resultOffice.next()) { %>
+            <%  for (JsonElement el: office) { %>
                 <div class='grid-item'>
-                    <a href="product.html?Id=<%= resultOffice.getString("id")%>"
-                    name="<%= resultOffice.getString("id")%>"
+                    <a href="product.html?Id=<%= el.getAsJsonObject().get("id").getAsString()%>"
+                    name="<%= el.getAsJsonObject().get("id").getAsString()%>"
                        style="color:black;text-decoration:none;"
                     >
-                        <%= resultOffice.getString("name") %>
+                        <%= el.getAsJsonObject().get("name").getAsString() %>
                         <div class="grid-img">
-                            <img src="./img/<%=resultOffice.getString("id")%>/0.jpg" class="photo">
+                            <img src="./img/<%=el.getAsJsonObject().get("id").getAsString()%>/0.jpg" class="photo">
                         </div>
-                        <p><%=resultOffice.getString("price")%> </p>
+                        <p><%=el.getAsJsonObject().get("price").getAsString()%> </p>
                     </a>
                 </div>
 
             <% } %>
 
+
+
         </div>
         <h3>Gaming</h3>
         <div id="productListGaming" class="grid-container">
-            <%  while (resultGaming.next()) { %>
+            <%  for (JsonElement el: gaming) { %>
             <div class='grid-item'>
-                <a href="product.html?Id=<%= resultGaming.getString("id")%>"
-                   name="<%= resultGaming.getString("id")%>"
+                <a href="product.html?Id=<%= el.getAsJsonObject().get("id").getAsString()%>"
+                   name="<%= el.getAsJsonObject().get("id").getAsString()%>"
                    style="color:black;text-decoration:none;"
                 >
-                    <%= resultGaming.getString("name") %>
+                    <%= el.getAsJsonObject().get("name").getAsString() %>
                     <div class="grid-img">
-                        <img src="./img/<%=resultGaming.getString("id")%>/0.jpg" class="photo">
+                        <img src="./img/<%=el.getAsJsonObject().get("id").getAsString()%>/0.jpg" class="photo">
                     </div>
-                    <p><%=resultGaming.getString("price")%> </p>
+                    <p><%=el.getAsJsonObject().get("price").getAsString()%> </p>
                 </a>
             </div>
 
@@ -101,17 +174,17 @@
 
         <h3>Professional</h3>
         <div id="productListProfessional" class="grid-container">
-            <%  while (resultPro.next()) { %>
+            <%  for (JsonElement el: professional) { %>
             <div class='grid-item'>
-                <a href="product.html?Id=<%= resultPro.getString("id")%>"
-                   name="<%= resultPro.getString("id")%>"
+                <a href="product.html?Id=<%= el.getAsJsonObject().get("id").getAsString()%>"
+                   name="<%= el.getAsJsonObject().get("id").getAsString()%>"
                    style="color:black;text-decoration:none;"
                 >
-                    <%= resultPro.getString("name") %>
+                    <%= el.getAsJsonObject().get("name").getAsString() %>
                     <div class="grid-img">
-                        <img src="./img/<%=resultPro.getString("id")%>/0.jpg" class="photo">
+                        <img src="./img/<%=el.getAsJsonObject().get("id").getAsString()%>/0.jpg" class="photo">
                     </div>
-                    <p><%=resultPro.getString("price")%> </p>
+                    <p><%=el.getAsJsonObject().get("price").getAsString()%> </p>
                 </a>
             </div>
 
@@ -184,3 +257,11 @@
     </div>
 </div>
 </body>
+<%!
+    private static URI getBaseURI() {
+
+        //Change the URL here to make the client point to your service.
+        return UriBuilder.fromUri("http://localhost:8081/keyboardClient_war/api/products/").build();
+    }
+
+%>
