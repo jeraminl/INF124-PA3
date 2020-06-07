@@ -1,4 +1,4 @@
-# PA3
+# PA4
 
 Group Members:
 
@@ -14,9 +14,74 @@ When you click into any given product, you will be redirect to a product page th
 
 Satisfied Requirement Locations:
 
-1. This requirement is achieved with SessionServlet and ProductsCatalogServlet. The ProductsCatalogServlet will call the database to load all the products into their respective category. At the same time, it will also use the "include" function of the request dispatcher to call the SessionServlet to get the info on up to 5 latest products that the user viewed in this session (it will appear in alphabetical order rather than order of visitation. However it will definitely only show the 5 latest ones).
-2. The product details page are handled by the SingleProductServlet and Session Sevlet. The SingleProductServlet will load all the info necessary for the product. The SessionServlet will handle adding items to cart using httpsession when the user hits the "add to cart" button.
-3. The checkout page can be accessed in any detailed product page with the 'checkout button' at the bottom of the page. The items in the shopping cart will display on the right column of the order form by using the DisplayCartServlet. The Tax and Zip servlet will handle the ajax functionality (updating shipping state based on zip and tax based on the state). Once all the info has been filled and submitted, the OrderSubmissionServlet will handle inserting the info into the database then it will use the requestDispatcher's forward function to bring the user to the OrderConfirmation Servlet which will print out a page will all the order details.
+1. This requirement is achieved in the index.jsp
+2. This requirement is achieved through the webservice application in the Resource class. For our website, we only need to use the GET and POST method with different MEDIATYPEs to achieve all the functionality
+
+3. We have replaced all direct database interactions to use the webservice instead (see SingleProductServlet for example.)
+
+RESTful Documentation:
+
+- Methods in the Resources class
+
+1. GET -> produces json.
+
+- path: {localhost}/{war}/api/products/
+- sample response:
+  [
+  {
+  "id": 0,
+  "name": "Dell Wired Keyboard KB216",
+  "description": null,
+  "size": null,
+  "price": 23.0,
+  "keySwitch": null,
+  "category": "Office"
+  },...... ]
+
+2. GET singe product -> produces json.
+
+- path: {localhost}/{war}/api/products/{id}
+- sample response:
+  {
+  "id": 1,
+  "name": "Dell Wireless Keyboard and Mouse KM636",
+  "description": "Contemporary wireless keyboard and mouse for office and personal environments.",
+  "size": "Full",
+  "price": 33.94,
+  "keySwitch": "Membrane",
+  "category": "Office"
+  }
+
+3. POST for order submission -> consumes form
+
+- path: {localhost}/{war}/api/products/
+- sample request:
+  firstName:post
+  lastName:man
+  address:1234 ant
+  city:irvine
+  state:CA
+  zip:92606
+  email:hi@example.com
+  phone:000-000-0000
+  productCart:1
+  shipMeth:6
+  billingFirstName:post
+  billingLastName:man
+  ccNum:0000 0000 0000 0000
+  billingAddress:1234 ant
+  billingCity:irvine
+  billingState:ca
+  billingZip:92606
+  finalPrice:"99.99"
+- sample response:
+  order added successfully
+
+4. POST for order submission -> consumes JSON
+
+- path: {localhost}/{war}/api/products/
+- sample request: (order object converted to JSON)
+- sample response: order added successfully
 
 Other usability note:
 
